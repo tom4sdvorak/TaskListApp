@@ -45,6 +45,7 @@ import TestTaskList from "./pages/TestTaskList";
 
 import Deleted from "./pages/Deleted";
 import About from "./pages/About";
+import Welcome from "./pages/Welcome";
 
 setupIonicReact();
 
@@ -56,7 +57,10 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/home" />
+              <Redirect to="/welcome" />
+            </Route>
+            <Route path="/welcome" exact={true}>
+              <Welcome />
             </Route>
             <Route path="/home" exact={true}>
               <Home />
