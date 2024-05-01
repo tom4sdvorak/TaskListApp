@@ -7,7 +7,6 @@ import {
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 import Menu from "./components/Menu";
-import Page from "./pages/Page";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -42,6 +41,7 @@ import Tasks from "./pages/Tasks";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import TestTaskList from "./pages/TestTaskList";
 
 import Deleted from "./pages/Deleted";
 import About from "./pages/About";
@@ -63,6 +63,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/tasks" exact={true}>
               <Tasks />
+            </Route>
+            <Route path="/testtask" exact={true}>
+              <TestTaskList />
             </Route>
 
             <Route path="/deleted" exact={true}>

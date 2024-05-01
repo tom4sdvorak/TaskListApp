@@ -44,6 +44,12 @@ const appPages: AppPage[] = [
     iosIcon: listOutline,
     mdIcon: listSharp,
   },
+  {
+    title: "TestTask",
+    url: "/testtask",
+    iosIcon: listOutline,
+    mdIcon: listSharp,
+  },
 
   {
     title: "Deleted",
