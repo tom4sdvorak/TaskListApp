@@ -1,6 +1,7 @@
 import {
   IonButtons,
   IonContent,
+  IonFab,
   IonFabButton,
   IonHeader,
   IonIcon,
@@ -20,14 +21,16 @@ const Home: React.FC = () => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>Welcome</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
         Click plus button to add a list
-        <IonFabButton>
-          <IonIcon icon={addOutline} />
-        </IonFabButton>
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton>
+            <IonIcon icon={addOutline} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

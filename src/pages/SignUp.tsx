@@ -1,10 +1,12 @@
 import {
   IonButton,
+  IonCol,
   IonContent,
   IonHeader,
   IonInput,
   IonItem,
   IonPage,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -19,20 +21,27 @@ const SignUp: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <IonItem>
-          <IonTitle>Email</IonTitle>
-          <IonInput type="email" placeholder="email"></IonInput>
-        </IonItem>
-        <IonItem>
-          <IonTitle>Password</IonTitle>
-          <IonInput type="password" placeholder="password"></IonInput>
-        </IonItem>
-        <IonItem>
-          <IonButton>Sign up</IonButton>
-        </IonItem>
-        <p>
-          Already have an account? Log in <a href="/login">here</a>
-        </p>
+        <form>
+          <IonItem>
+            <IonTitle>Email</IonTitle>
+            <IonInput type="email" placeholder="email"></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonTitle>Password</IonTitle>
+            <IonInput type="password" placeholder="password"></IonInput>
+          </IonItem>
+          <IonRow className="flex text-center">
+            <IonCol></IonCol>
+            <IonCol>
+              <IonButton>Sign up</IonButton>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+
+          <p>
+            Already have an account? Log in <a href="/login">here</a>
+          </p>
+        </form>
       </IonContent>
     </IonPage>
   );
