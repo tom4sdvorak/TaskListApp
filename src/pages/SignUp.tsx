@@ -22,14 +22,20 @@ const SignUp: React.FC = () => {
       </IonHeader>
       <IonContent className="ion-padding">
         <form>
-          <IonItem>
-            <IonTitle>Email</IonTitle>
-            <IonInput type="email" placeholder="email"></IonInput>
-          </IonItem>
-          <IonItem>
-            <IonTitle>Password</IonTitle>
-            <IonInput type="password" placeholder="password"></IonInput>
-          </IonItem>
+          <div className="flex ion-padding ion-margin">
+            <IonInput
+              className="ion-margin-bottom"
+              fill="outline"
+              type="email"
+              placeholder="email"
+            ></IonInput>
+
+            <IonInput
+              fill="outline"
+              type="password"
+              placeholder="password"
+            ></IonInput>
+          </div>
           <IonRow className="flex text-center">
             <IonCol></IonCol>
             <IonCol>
@@ -38,7 +44,7 @@ const SignUp: React.FC = () => {
             <IonCol></IonCol>
           </IonRow>
 
-          <p>
+          <p className="ion-padding">
             Already have an account? Log in <a href="/login">here</a>
           </p>
         </form>

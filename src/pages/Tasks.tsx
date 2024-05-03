@@ -2,6 +2,7 @@ import {
   IonButtons,
   IonCard,
   IonCardContent,
+  IonCardTitle,
   IonContent,
   IonHeader,
   IonMenuButton,
@@ -23,7 +24,8 @@ const Lists: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <IonCard>
+        <IonCard className="ion-padding">
+          <IonCardTitle>Task list name here</IonCardTitle>
           <IonCardContent></IonCardContent>
         </IonCard>
       </IonContent>

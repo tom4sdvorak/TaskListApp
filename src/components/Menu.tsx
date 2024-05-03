@@ -17,6 +17,7 @@ import {
   bookmarkOutline,
   homeOutline,
   homeSharp,
+  informationOutline,
   listOutline,
   listSharp,
   trashOutline,
@@ -105,7 +106,11 @@ const Menu: React.FC = () => {
           <IonListHeader>Other</IonListHeader>
           {labels.map((label, index) => (
             <IonItem button href="/about" lines="none" key={index}>
-              <IonIcon aria-hidden="true" slot="start" icon={bookmarkOutline} />
+              <IonIcon
+                aria-hidden="true"
+                slot="start"
+                icon={informationOutline}
+              />
               <IonLabel>{label}</IonLabel>
             </IonItem>
           ))}
