@@ -11,13 +11,22 @@ import {
   IonItem,
   IonCheckbox,
   IonToolbar,
-  IonFab, IonFabButton, IonIcon, IonAlert, useIonAlert, IonListHeader, IonLabel, 
+  IonFab, IonFabButton, IonIcon, IonAlert, useIonAlert, IonListHeader, IonLabel,  
 } from "@ionic/react";
 import React, { useState } from 'react';
+import { RouteComponentProps} from 'react-router-dom';
 import { add } from 'ionicons/icons';
-import './TestTaskList.css';
+import './TaskList.css';
 
-const List: React.FC = () => {
+//Create interface for URL parameter
+interface RouteParams {
+  id: string;
+}
+
+const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { // match.params.id will hold ID of task list
+
+  // TODO read task list based on ID from storage / database
+
   // Initialize list of tasks
   const [tasks, setTasks] = useState([{ id: 1, task: 'Task 1', done: false },
   { id: 2, task: 'Task 2', done: false },
@@ -88,7 +97,7 @@ const List: React.FC = () => {
         </IonList>
         <IonFab id="add-task" slot="fixed" vertical="bottom" horizontal="end" onClick={() =>
         presentAlert({
-          header: 'Add a task',
+          header: 'ADD TASK',
           buttons: ['Cancel', {
             text: 'Add',
             handler: (data) => {
@@ -112,4 +121,4 @@ const List: React.FC = () => {
   );
 };
 
-export default List;
+export default TaskList;

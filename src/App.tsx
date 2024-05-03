@@ -41,7 +41,7 @@ import Tasks from "./pages/Tasks";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import TestTaskList from "./pages/TestTaskList";
+import TaskList from "./pages/TaskList";
 
 import Deleted from "./pages/Deleted";
 import About from "./pages/About";
@@ -68,10 +68,7 @@ const App: React.FC = () => {
             <Route path="/tasks" exact={true}>
               <Tasks />
             </Route>
-            <Route path="/testtask" exact={true}>
-              <TestTaskList />
-            </Route>
-
+            <Route path="/tasks/:id" component={TaskList} />
             <Route path="/deleted" exact={true}>
               <Deleted />
             </Route>

@@ -8,9 +8,10 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar,
+  IonToolbar, IonCardHeader, IonCardSubtitle, IonButton, IonIcon, IonRouterLink, 
 } from "@ionic/react";
 import React from "react";
+import { trashOutline } from 'ionicons/icons';
 
 const Lists: React.FC = () => {
   return (
@@ -24,10 +25,7 @@ const Lists: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <IonCard className="ion-padding">
-          <IonCardTitle>Task list name here</IonCardTitle>
-          <IonCardContent></IonCardContent>
-        </IonCard>
+        
       </IonContent>
     </IonPage>
   );
