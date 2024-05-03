@@ -12,6 +12,7 @@ import {
 } from "@ionic/react";
 import { addCircle, addOutline } from "ionicons/icons";
 import React from "react";
+import "./Home.css";
 
 const Home: React.FC = () => {
   return (
@@ -24,10 +25,10 @@ const Home: React.FC = () => {
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
+      <IonContent id="home" className="ion-padding">
         Click plus button to add a list
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton>
+          <IonFabButton routerLink="/testtask">
             <IonIcon icon={addOutline} />
           </IonFabButton>
         </IonFab>
