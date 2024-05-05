@@ -8,9 +8,10 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
+  useIonViewWillEnter,
   IonToolbar, IonCardHeader, IonCardSubtitle, IonButton, IonRouterLink, IonCard, IonCardTitle, useIonAlert, 
 } from "@ionic/react";
-import { addCircle, addOutline, ellipseSharp } from "ionicons/icons";
+import { addCircle, addOutline, ellipseSharp, list } from "ionicons/icons";
 import React, { useState, useEffect } from 'react';
 import { Storage } from '@ionic/storage';
 import { trashOutline, add } from 'ionicons/icons';
@@ -19,51 +20,67 @@ import { useStorage, List} from '../helpers/LocalStore';
 import "./Home.css";
 
 const Home: React.FC = () => {
-  const { getAllLists, saveList } = useStorage();
+  const { getAllLists, saveList, changeState } = useStorage();
   // Initialize alert popup
   const [presentAlert] = useIonAlert();
-  const [lists, setList] = useState([{
-    id: 0,
-    title: "Test",
-    edited: 1714826035412
-  }]);
 
   // Initialize array of task lists
   const [allLists, setAllLists] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const resolvedData : any = await getAllLists();
-        setAllLists(resolvedData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  /*useEffect(() => {
+    console.log("User arrived Home");
     fetchData();
-  }, []);
-  console.log(allLists);
-  
-  
+  }, []);*/
 
-  function addTaskList(listName: string){
+  // Update view of tasks when entering the page
+  useIonViewWillEnter(() => {
+    console.log('ionViewWillEnter event fired');
+    fetchData();
+  });
+
+  const fetchData = async () => {
+    try {
+      const resolvedData : any = await getAllLists();
+      setAllLists(resolvedData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const addTaskList = async (listName: string) => {
     // Don't add anything if name is empty
     if (listName.length < 1){
       return false;
     }
     else{
-      const created = Date.now();
-      const uniqID = created - 1714827780379;
-      const newList: List = {
+      try {
+        console.log("Adding list " + listName);
+        const created = Date.now();
+        const uniqID = created - 1714827780379;
+        const newList: List = {
         title: listName,
         edited: created,
+        deleted: false, 
         tasks: []
-      };
-      saveList(uniqID.toString(), newList)
-      //setList([...lists, {id: uniqID, title: listName, edited: created}]);
-      return true;
+        }
+        await saveList(uniqID.toString(), newList);
+        await fetchData();
+        return true;
+      } catch (error) {
+        console.error('Error updating data:', error);
+        return false;
+      }
     }
   }
 
+  const deleteList = async (listID: string) => {
+    try {
+      console.log("Trying to mark list deleted " + listID);
+      await changeState(listID);
+      fetchData();
+    } catch (error) {
+      console.error('Error updating data:', error);
+    }
+  };
 
   return (
     <IonPage>
@@ -83,7 +100,7 @@ const Home: React.FC = () => {
               <IonCardSubtitle>Edited {format(list.edited)}</IonCardSubtitle>
               <IonCardTitle><IonRouterLink routerLink={"/tasks/" + list.id} routerDirection="forward">{list.title}</IonRouterLink></IonCardTitle>
             </IonCardHeader>
-            <IonButton fill="clear"><IonIcon icon={trashOutline}></IonIcon></IonButton>
+            <IonButton fill="clear" onClick={() => deleteList(list.id)}><IonIcon icon={trashOutline}></IonIcon></IonButton>
           </IonCard>
         ))}
         <IonFab id="add-list" slot="fixed" vertical="bottom" horizontal="end" onClick={() =>

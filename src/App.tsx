@@ -65,9 +65,6 @@ const App: React.FC = () => {
             <Route path="/home" exact={true}>
               <Home />
             </Route>
-            <Route path="/tasks" exact={true}>
-              <Tasks />
-            </Route>
             <Route path="/tasks/:id" component={TaskList} />
             <Route path="/deleted" exact={true}>
               <Deleted />

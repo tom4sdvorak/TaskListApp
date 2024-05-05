@@ -40,19 +40,6 @@ const appPages: AppPage[] = [
     mdIcon: homeSharp,
   },
   {
-    title: "Tasks",
-    url: "/tasks",
-    iosIcon: listOutline,
-    mdIcon: listSharp,
-  },
-  {
-    title: "TestTask",
-    url: "/testtask",
-    iosIcon: listOutline,
-    mdIcon: listSharp,
-  },
-
-  {
     title: "Deleted",
     url: "/deleted",
     iosIcon: trashOutline,
