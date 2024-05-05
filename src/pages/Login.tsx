@@ -2,6 +2,7 @@ import {
   IonButton,
   IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
   IonInput,
   IonItem,
@@ -22,33 +23,49 @@ const Login: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <form>
-          <div className="flex ion-padding ion-margin">
-            <IonInput
-              className="ion-margin-bottom"
-              fill="outline"
-              type="email"
-              placeholder="email"
-            ></IonInput>
-
-            <IonInput
-              fill="outline"
-              type="password"
-              placeholder="password"
-            ></IonInput>
-          </div>
-
+        <IonGrid>
           <IonRow>
             <IonCol></IonCol>
-            <IonCol>
-              <IonButton>Log in</IonButton>
+            <IonCol className="ion-padding">
+              <IonTitle className="ion-padding">Welcome to </IonTitle>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
-          <p>
-            Don't have an account yet? Sign up <a href="/signup">here</a>
-          </p>
-        </form>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonTitle>Task App</IonTitle>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+          <form>
+            <div className="flex ion-padding ion-margin">
+              <IonInput
+                className="ion-margin-bottom"
+                fill="outline"
+                type="email"
+                placeholder="email"
+              ></IonInput>
+
+              <IonInput
+                fill="outline"
+                type="password"
+                placeholder="password"
+              ></IonInput>
+            </div>
+
+            <IonRow>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonButton>Log in</IonButton>
+              </IonCol>
+              <IonCol></IonCol>
+            </IonRow>
+            <p>
+              Don't have an account yet? Sign up <a href="/signup">here</a>
+            </p>
+          </form>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );
