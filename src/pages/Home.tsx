@@ -8,7 +8,7 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  useIonViewWillEnter,
+  useIonViewWillEnter, IonGrid, IonRow, IonCol, 
   IonToolbar, IonCardHeader, IonCardSubtitle, IonButton, IonRouterLink, IonCard, IonCardTitle, useIonAlert, 
 } from "@ionic/react";
 import { addCircle, addOutline, ellipseSharp, list } from "ionicons/icons";
@@ -21,19 +21,11 @@ import "./Home.css";
 
 const Home: React.FC = () => {
   const { getAllLists, saveList, changeState } = useStorage();
-  // Initialize alert popup
   const [presentAlert] = useIonAlert();
-
-  // Initialize array of task lists
   const [allLists, setAllLists] = useState([]);
-  /*useEffect(() => {
-    console.log("User arrived Home");
-    fetchData();
-  }, []);*/
 
   // Update view of tasks when entering the page
   useIonViewWillEnter(() => {
-    console.log('ionViewWillEnter event fired');
     fetchData();
   });
 
@@ -94,15 +86,22 @@ const Home: React.FC = () => {
       </IonHeader>
       <IonContent id="home" className="ion-padding">
         Click plus button to add a list
-        {allLists.map((list) => (
-          <IonCard key={list.id}>
-            <IonCardHeader>
-              <IonCardSubtitle>Edited {format(list.edited)}</IonCardSubtitle>
-              <IonCardTitle><IonRouterLink routerLink={"/tasks/" + list.id} routerDirection="forward">{list.title}</IonRouterLink></IonCardTitle>
-            </IonCardHeader>
-            <IonButton fill="clear" onClick={() => deleteList(list.id)}><IonIcon icon={trashOutline}></IonIcon></IonButton>
-          </IonCard>
-        ))}
+        <IonGrid>
+          <IonRow>
+            {allLists.length > 0 && allLists.map((list) => (
+              <IonCol size="6" size-sm="4" size-md="3" size-xl="2" key={list.id}>
+                <IonCard>
+                  <IonCardHeader>
+                    <IonCardSubtitle>Edited {format(list.edited)}</IonCardSubtitle>
+                    <IonCardTitle><IonRouterLink routerLink={"/tasks/" + list.id} routerDirection="forward">{list.title}</IonRouterLink></IonCardTitle>
+                  </IonCardHeader>
+                  <IonButton fill="clear" onClick={() => deleteList(list.id)}><IonIcon icon={trashOutline}></IonIcon></IonButton>
+                </IonCard>
+              </IonCol>
+            ))}
+            {allLists.length < 1 && <IonCol size="12"><h1 className="ion-text-center">You have no task lists.</h1></IonCol>}   
+          </IonRow>
+        </IonGrid>
         <IonFab id="add-list" slot="fixed" vertical="bottom" horizontal="end" onClick={() =>
         presentAlert({
           header: 'CREATE NEW TASK LIST',

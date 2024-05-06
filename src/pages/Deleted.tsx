@@ -6,7 +6,7 @@ import {
   IonFabButton,
   IonMenuButton,
   IonPage,
-  IonTitle, useIonViewWillEnter, 
+  IonTitle, useIonViewWillEnter, IonGrid, IonRow, IonCol, 
   IonToolbar,  IonCardHeader, IonCardSubtitle, IonButton, IonRouterLink, IonCard, IonCardTitle, useIonAlert, IonIcon, 
 } from "@ionic/react";
 import { addCircle, addOutline, ellipseSharp, list } from "ionicons/icons";
@@ -71,16 +71,23 @@ const Deleted: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent id="deleted" className="ion-padding">
-        {allLists.map((list) => (
-          <IonCard key={list.id}>
-            <IonCardHeader>
-              <IonCardSubtitle>Deleted {format(list.edited)}</IonCardSubtitle>
-              <IonCardTitle>{list.title}</IonCardTitle>
-            </IonCardHeader>
-            <IonButton fill="clear" onClick={() => removeList(list.id)}><IonIcon icon={trashOutline}></IonIcon></IonButton>
-            <IonButton fill="clear" onClick={() => restoreList(list.id)}><IonIcon icon={reloadOutline}></IonIcon></IonButton>
-          </IonCard>
-        ))}
+        <IonGrid>
+          <IonRow>
+            {allLists.length > 0 && allLists.map((list) => (
+              <IonCol size="6" size-sm="4" size-md="3" size-xl="2">
+                <IonCard key={list.id}>
+                  <IonCardHeader>
+                    <IonCardSubtitle>Deleted {format(list.edited)}</IonCardSubtitle>
+                    <IonCardTitle>{list.title}</IonCardTitle>
+                  </IonCardHeader>
+                  <IonButton fill="clear" onClick={() => removeList(list.id)}><IonIcon icon={trashOutline}></IonIcon></IonButton>
+                  <IonButton fill="clear" onClick={() => restoreList(list.id)}><IonIcon icon={reloadOutline}></IonIcon></IonButton>
+                </IonCard>
+              </IonCol>
+            ))}
+            {allLists.length < 1 && <IonCol size="12"><h1 className="ion-text-center">You have no deleted task lists.</h1></IonCol>}
+          </IonRow>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

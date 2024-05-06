@@ -25,19 +25,17 @@ interface RouteParams {
 }
 
 const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { // match.params.id will hold ID of task list
-
-  // TODO read task list based on ID from storage / database
-  const { getList } = useStorage();
-  const [list, setList] = useState();
+  const { getList, saveList } = useStorage();
+  const [presentAlert] = useIonAlert();
+  const [list, setList] = useState<List>({title: "Default",edited: Date.now(), deleted: false, tasks: []});
   const [tasks, setTasks] = useState<Task[]>([]);
   useEffect(() => {
-    console.log("User arrived Home");
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const resolvedData = await getList(match.params.id);
+      const resolvedData : List = await getList(match.params.id);
       setList(resolvedData);
       setTasks(resolvedData.tasks);
     } catch (error) {
@@ -45,22 +43,15 @@ const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { //
     }
   };
   
-
-
-  // Initialize list of tasks
-  /*const [tasks, setTasks] = useState([{ id: 1, task: 'Task 1', done: false },
-  { id: 2, task: 'Task 2', done: false },
-  { id: 3, task: 'Task 3', done: false },]);*/
-  // Initialize alert popup
-  const [presentAlert] = useIonAlert();
-  
   // Change checkbox state in copy of list of tasks and replace old
   function changeCheckbox(taskIndex: number){
-    const newTaskList = [...tasks];
-    //const index = newTaskList.findIndex(obj => obj.id === taskId);
     if (taskIndex !== -1){
-      newTaskList[taskIndex].done = !newTaskList[taskIndex].done;
-      setTasks(newTaskList);
+      const changedList = {...list};
+      changedList.tasks[taskIndex].done =  !changedList.tasks[taskIndex].done;
+      changedList.edited = Date.now();
+      setTasks(changedList.tasks);
+      setList(changedList);
+      saveList(match.params.id, changedList);
     }
   }
 
@@ -71,7 +62,12 @@ const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { //
       return false;
     }
     else{
-      setTasks([...tasks, {task: taskText, done: false}]);
+      const changedList = {...list};
+      changedList.tasks = [...tasks, {task: taskText, done: false}];
+      changedList.edited = Date.now();
+      setTasks(changedList.tasks);
+      setList(changedList);
+      saveList(match.params.id, changedList);
       return true;
     }
   }
