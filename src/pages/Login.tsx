@@ -11,6 +11,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
+import { loginUser } from '../firebaseCfg.ts'
 import "./Home.css";
 
 const Login: React.FC = () => {
