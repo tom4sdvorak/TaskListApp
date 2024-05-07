@@ -46,10 +46,28 @@ import TaskList from "./pages/TaskList";
 import Deleted from "./pages/Deleted";
 import About from "./pages/About";
 import Welcome from "./pages/Welcome";
+import { useEffect, useState } from "react";
+import { getCurrentUser } from "./firebaseCfg";
 
 setupIonicReact();
 
 const App: React.FC = () => {
+  
+  const [ userLogged, setLogged ] = useState(false);
+  useEffect(() => {
+    getCurrentUser().then(user => {
+      if(user){
+        console.log("User logged");
+        setLogged(true);
+      }
+      else{
+        console.log("User not logged");
+        setLogged(false);
+      }
+      
+    })
+  }, []);
+  
   return (
     <IonApp>
       <IonReactRouter>
@@ -62,13 +80,9 @@ const App: React.FC = () => {
             <Route path="/welcome" exact={true}>
               <Welcome />
             </Route>
-            <Route path="/home" exact={true}>
-              <Home />
-            </Route>
-            <Route path="/tasks/:id" component={TaskList} />
-            <Route path="/deleted" exact={true}>
-              <Deleted />
-            </Route>
+            <Route path="/home" exact={true} render={(props) => {return userLogged ? <Home/> : <Login />;}} />
+            <Route path="/tasks/:id" render={(props) => {return userLogged ? <TaskList {...props} /> : <Login />;}} />
+            <Route path="/deleted" exact={true} render={(props) => {return userLogged ? <Deleted/> : <Login />;}} />
             <Route path="/about" exact={true}>
               <About />
             </Route>
@@ -76,9 +90,7 @@ const App: React.FC = () => {
             <Route path="/signup" exact={true}>
               <SignUp />
             </Route>
-            <Route path="/login" exact={true}>
-              <Login />
-            </Route>
+            <Route path="/login" exact={true} render={(props) => {return userLogged ? <Home/> : <Login />;}} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

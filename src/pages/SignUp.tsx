@@ -8,12 +8,54 @@ import {
   IonPage,
   IonRow,
   IonTitle,
+  IonToast,
   IonToolbar,
 } from "@ionic/react";
-import React from "react";
+import React, { useState } from "react";
 import "./Home.css";
+import { registerUser } from "../firebaseCfg";
+import { useHistory } from "react-router";
 
 const SignUp: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirm, setConfirm] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [toastMessage, setToast] = useState("Passwords do not match!");
+  const history = useHistory();
+
+  const redirectToLogin = () => {
+    history.push('/login');
+  };
+
+  async function regUser() {
+    if(password !== confirm){
+      setToast("Passwords do not match!")
+      setIsOpen(true)
+      return false
+    }
+    if (email.trim() === '' || password.trim() === ''){
+      setToast("Email and password are required")
+      setIsOpen(true)
+      return false
+    }
+    if (password.length < 6){
+      setToast("Password must be longer than 6 characters")
+      setIsOpen(true)
+      return false
+    }
+    const res = await registerUser(email, password)
+    if(res){
+      setToast("You have been registered! Redirecting in 5s...")
+      setIsOpen(true)
+      setTimeout(redirectToLogin, 5000);
+    }
+    else{
+      setToast("Something went wrong")
+      setIsOpen(true)
+    }
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -28,27 +70,42 @@ const SignUp: React.FC = () => {
               className="ion-margin-bottom"
               fill="outline"
               type="email"
-              placeholder="email"
+              placeholder="Email"
+              onIonInput={(e: any) => setEmail(e.target.value)}
             ></IonInput>
 
             <IonInput
               fill="outline"
               type="password"
-              placeholder="password"
+              placeholder="Password"
+              onIonInput={(e: any) => setPassword(e.target.value)}
+            ></IonInput>
+
+            <IonInput
+              fill="outline"
+              type="password"
+              placeholder="Confirm password"
+              onIonInput={(e: any) => setConfirm(e.target.value)}
             ></IonInput>
           </div>
           <IonRow className="flex text-center">
             <IonCol></IonCol>
             <IonCol>
-              <IonButton>Sign up</IonButton>
+              <IonButton onClick={regUser}>Sign up</IonButton>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
 
           <p className="ion-padding">
-            Already have an account? Log in <a href="/login">here</a>
+            Already have an account? Log in <IonItem onClick={redirectToLogin}>here</IonItem>
           </p>
         </form>
+        <IonToast
+          isOpen={isOpen}
+          message={toastMessage}
+          onDidDismiss={() => setIsOpen(false)}
+          duration={5000}
+        ></IonToast>
       </IonContent>
     </IonPage>
   );

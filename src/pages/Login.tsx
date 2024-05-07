@@ -10,11 +10,28 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import React from "react";
-import { loginUser } from '../firebaseCfg.ts'
+import React, { useState } from "react";
+import { loginUser } from '../firebaseCfg'
 import "./Home.css";
+import { useHistory } from "react-router";
 
 const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useHistory();
+
+  async function tryLogin() {
+    console.log("Loggin with: " + email + password);
+    const res = await loginUser(email, password);
+    if(res){
+      redirectToHome();
+    }
+  }
+
+  const redirectToHome = () => {
+    history.push('/home');
+  };
+  
   return (
     <IonPage>
       <IonHeader>
@@ -30,19 +47,21 @@ const Login: React.FC = () => {
               fill="outline"
               type="email"
               placeholder="email"
+              onIonInput={(e: any) => setEmail(e.target.value)}
             ></IonInput>
 
             <IonInput
               fill="outline"
               type="password"
               placeholder="password"
+              onIonInput={(e: any) => setPassword(e.target.value)}
             ></IonInput>
           </div>
 
           <IonRow>
             <IonCol></IonCol>
             <IonCol>
-              <IonButton>Log in</IonButton>
+              <IonButton onClick={tryLogin}>Log in</IonButton>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>

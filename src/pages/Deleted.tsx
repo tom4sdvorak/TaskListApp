@@ -27,7 +27,6 @@ const Deleted: React.FC = () => {
 
   // Update view of tasks when entering the page
   useIonViewWillEnter(() => {
-    console.log('ionViewWillEnter event fired');
     fetchData();
   });
 
@@ -74,7 +73,7 @@ const Deleted: React.FC = () => {
         <IonGrid>
           <IonRow>
             {allLists.length > 0 && allLists.map((list) => (
-              <IonCol size="6" size-sm="4" size-md="3" size-xl="2">
+              <IonCol size="6" size-sm="4" size-md="3" size-xl="2" key={list.id}>
                 <IonCard key={list.id}>
                   <IonCardHeader>
                     <IonCardSubtitle>Deleted {format(list.edited)}</IonCardSubtitle>
