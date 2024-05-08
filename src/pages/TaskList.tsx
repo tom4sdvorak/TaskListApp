@@ -13,9 +13,10 @@ import {
   IonToolbar,
   IonFab, IonFabButton, IonIcon, IonAlert, useIonAlert, IonListHeader, IonLabel,  
 } from "@ionic/react";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RouteComponentProps} from 'react-router-dom';
 import { add } from 'ionicons/icons';
+import { useStorage, List, Task} from '../helpers/LocalStore';
 import './TaskList.css';
 
 //Create interface for URL parameter
@@ -24,23 +25,33 @@ interface RouteParams {
 }
 
 const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { // match.params.id will hold ID of task list
-
-  // TODO read task list based on ID from storage / database
-
-  // Initialize list of tasks
-  const [tasks, setTasks] = useState([{ id: 1, task: 'Task 1', done: false },
-  { id: 2, task: 'Task 2', done: false },
-  { id: 3, task: 'Task 3', done: false },]);
-  // Initialize alert popup
+  const { getList, saveList } = useStorage();
   const [presentAlert] = useIonAlert();
+  const [list, setList] = useState<List>({title: "Default",edited: Date.now(), deleted: false, tasks: []});
+  const [tasks, setTasks] = useState<Task[]>([]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const resolvedData : List = await getList(match.params.id);
+      setList(resolvedData);
+      setTasks(resolvedData.tasks);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   
   // Change checkbox state in copy of list of tasks and replace old
-  function changeCheckbox(taskId: number){
-    const newTaskList = [...tasks];
-    const index = newTaskList.findIndex(obj => obj.id === taskId);
-    if (index !== -1){
-      newTaskList[index].done = !newTaskList[index].done;
-      setTasks(newTaskList);
+  function changeCheckbox(taskIndex: number){
+    if (taskIndex !== -1){
+      const changedList = {...list};
+      changedList.tasks[taskIndex].done =  !changedList.tasks[taskIndex].done;
+      changedList.edited = Date.now();
+      setTasks(changedList.tasks);
+      setList(changedList);
+      saveList(match.params.id, changedList);
     }
   }
 
@@ -51,13 +62,12 @@ const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { //
       return false;
     }
     else{
-      // Set ID of new task to 0 if list is empty otherwise set it to one more than last task in the list
-      if (tasks.length === 0){
-        setTasks([...tasks, {id: 0, task: taskText, done: false}]);
-      }
-      else{
-        setTasks([...tasks, {id: tasks.at(-1)!.id+1, task: taskText, done: false}]);
-      }
+      const changedList = {...list};
+      changedList.tasks = [...tasks, {task: taskText, done: false}];
+      changedList.edited = Date.now();
+      setTasks(changedList.tasks);
+      setList(changedList);
+      saveList(match.params.id, changedList);
       return true;
     }
   }
@@ -77,10 +87,10 @@ const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { //
           <IonListHeader lines="full">
             <IonLabel>TO DO</IonLabel>
           </IonListHeader>
-          {tasks.map((task) => (
+          {tasks.map((task, index) => (
             !task.done ? (
-            <IonItem key={task.id}>
-              <IonCheckbox checked={task.done} onIonChange={() => changeCheckbox(task.id)}>{task.task}</IonCheckbox>
+            <IonItem key={index}>
+              <IonCheckbox checked={task.done} onIonChange={() => changeCheckbox(index)}>{task.task}</IonCheckbox>
             </IonItem>) : null
           ))}
         </IonList>
@@ -88,10 +98,10 @@ const TaskList: React.FC<RouteComponentProps<RouteParams>> = ({ match }) => { //
           <IonListHeader lines="full">
             <IonLabel>COMPLETED</IonLabel>
           </IonListHeader>
-          {tasks.map((task) => (
+          {tasks.map((task, index) => (
             task.done ? (
-            <IonItem key={task.id}>
-              <IonCheckbox class="doneTasks" checked={task.done} onIonChange={() => changeCheckbox(task.id)}>{task.task}</IonCheckbox>
+            <IonItem key={index}>
+              <IonCheckbox class="doneTasks" checked={task.done} onIonChange={() => changeCheckbox(index)}>{task.task}</IonCheckbox>
             </IonItem>) : null
           ))}
         </IonList>
