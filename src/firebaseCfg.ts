@@ -13,7 +13,7 @@ const firebaseConfig = {
     projectId: "tasklistapp-a6f81",
     storageBucket: "tasklistapp-a6f81.appspot.com",
     messagingSenderId: "645351903607",
-    appId: "1:645351903607:web:dffea58de9b972a1035172"
+    appId: "1:645351903607:web:76f1a82af1b1acad035172"
   };
 
 // Initialize Firebase
