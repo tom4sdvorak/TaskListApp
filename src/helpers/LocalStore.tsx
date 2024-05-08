@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Storage } from '@ionic/storage';
+import React, { useState } from "react";
+import { Storage } from "@ionic/storage";
 
 export interface Task {
-  task: string,
-  done: boolean,
+  task: string;
+  done: boolean;
 }
 
 export interface List {
-  title: string,
-  edited: number,
-  deleted: boolean, 
-  tasks: Task[],
+  title: string;
+  edited: number;
+  deleted: boolean;
+  tasks: Task[];
 }
 
-export function useStorage(){
+export function useStorage() {
   const store = new Storage();
   const [workList, setList] = useState();
   store.create();
@@ -21,11 +21,11 @@ export function useStorage(){
   const getList = async (id: string) => {
     try {
       const value = await store.get(id);
-      console.log('Data from local storage: ', value);
+      console.log("Data from local storage: ", value);
       //setList(value);
       return value;
     } catch (error) {
-      console.error('Error reading data from local storage:', error);
+      console.error("Error reading data from local storage:", error);
       return null;
     }
   };
@@ -33,12 +33,12 @@ export function useStorage(){
   const saveList = async (id: string, newList: List) => {
     try {
       await store.set(id, newList);
-      console.log('Data saved to local storage ' + newList.title);
+      console.log("Data saved to local storage " + newList.title);
       return true;
     } catch (error) {
-      console.error('Error saving data to local storage:', error);
+      console.error("Error saving data to local storage:", error);
       return null;
-    }   
+    }
   };
 
   // Function to mark task list deleted and other way around
@@ -48,37 +48,44 @@ export function useStorage(){
     listToChange.edited = Date.now();
     await saveList(id, listToChange);
     return true;
-  }
+  };
 
   // Deletes list from storage
   const deleteList = async (id: string) => {
     await store.remove(id);
     return true;
-  }
+  };
 
   // Returns array of all existing (not marked deleted) lists (not of List type)
   const getAllLists = async () => {
-    let allLists: { id: string; title: any; edited: any; }[] = [];
+    let allLists: { id: string; title: any; edited: any }[] = [];
     await store.forEach((value, key) => {
-      if(!value.deleted){
-        allLists.push({id: key, title: value.title, edited: value.edited});
+      if (!value.deleted) {
+        allLists.push({ id: key, title: value.title, edited: value.edited });
       }
     });
     return allLists;
-  }
+  };
 
   // Returns array of all deleted (not permamently) lists (not of List type)
   const getAllDeletedLists = async () => {
-    let allDelLists: { id: string; title: any; edited: any; }[] = [];
+    let allDelLists: { id: string; title: any; edited: any }[] = [];
     await store.forEach((value, key) => {
-      if(value.deleted){
-        allDelLists.push({id: key, title: value.title, edited: value.edited});
+      if (value.deleted) {
+        allDelLists.push({ id: key, title: value.title, edited: value.edited });
       }
     });
     return allDelLists;
-  }
+  };
 
-  return { getList, saveList, changeState, deleteList, getAllLists, getAllDeletedLists };
+  return {
+    getList,
+    saveList,
+    changeState,
+    deleteList,
+    getAllLists,
+    getAllDeletedLists,
+  };
 }
 
 export default useStorage;

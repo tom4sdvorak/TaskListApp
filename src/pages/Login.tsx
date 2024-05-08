@@ -2,6 +2,7 @@ import {
   IonButton,
   IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
   IonInput,
   IonItem,
@@ -11,27 +12,27 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React, { useState } from "react";
-import { loginUser } from '../firebaseCfg'
+import { loginUser } from "../firebaseCfg";
 import "./Home.css";
 import { useHistory } from "react-router";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const history = useHistory();
 
   async function tryLogin() {
     console.log("Loggin with: " + email + password);
     const res = await loginUser(email, password);
-    if(res){
+    if (res) {
       redirectToHome();
     }
   }
 
   const redirectToHome = () => {
-    history.push('/home');
+    history.push("/home");
   };
-  
+
   return (
     <IonPage>
       <IonHeader>
@@ -40,35 +41,53 @@ const Login: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <form>
-          <div className="flex ion-padding ion-margin">
-            <IonInput
-              className="ion-margin-bottom"
-              fill="outline"
-              type="email"
-              placeholder="email"
-              onIonInput={(e: any) => setEmail(e.target.value)}
-            ></IonInput>
-
-            <IonInput
-              fill="outline"
-              type="password"
-              placeholder="password"
-              onIonInput={(e: any) => setPassword(e.target.value)}
-            ></IonInput>
-          </div>
-
+        <IonGrid>
           <IonRow>
             <IonCol></IonCol>
-            <IonCol>
-              <IonButton onClick={tryLogin}>Log in</IonButton>
+            <IonCol className="ion-padding">
+              <IonTitle className="ion-padding">Welcome to </IonTitle>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
-          <p>
-            Don't have an account yet? Sign up <a href="/signup">here</a>
-          </p>
-        </form>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonTitle>Task App</IonTitle>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+
+          <form>
+            <div className="flex ion-padding ion-margin">
+              <IonInput
+                className="ion-margin-bottom"
+                fill="outline"
+                type="email"
+                placeholder="email"
+                onIonInput={(e: any) => setEmail(e.target.value)}
+              ></IonInput>
+
+              <IonInput
+                fill="outline"
+                type="password"
+                placeholder="password"
+                onIonInput={(e: any) => setPassword(e.target.value)}
+              ></IonInput>
+            </div>
+
+            <IonRow>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonButton onClick={tryLogin}>Log in</IonButton>
+              </IonCol>
+              <IonCol></IonCol>
+            </IonRow>
+
+            <p>
+              Don't have an account yet? Sign up <a href="/signup">here</a>
+            </p>
+          </form>
+        </IonGrid>
       </IonContent>
     </IonPage>
   );

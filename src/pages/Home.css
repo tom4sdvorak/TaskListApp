@@ -1,8 +1,15 @@
 
+ion-card {
+    --background: #18647c;
+    --color: #a7c7d1fc;
+    
+}
+
 ion-content {
-    --background: rgba(167, 199, 209, 0.99);
+    --background: #a7c7d1fc;
     --color: #18647C ;
     --border-radius: 10px;
+    
 }
 
 ion-toolbar {
@@ -21,5 +28,8 @@ ion-fab-button {
 }
 
 ion-input {
-    background-color: #f5f5f5;
+    background-color: #f5f5f5;  
 }
+
+
+
