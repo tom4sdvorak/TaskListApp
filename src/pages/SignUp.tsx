@@ -69,52 +69,54 @@ const SignUp: React.FC = () => {
             <IonCol></IonCol>
             <IonCol className="ion-padding">
               <IonTitle className="ion-padding">Welcome to </IonTitle>
-              <form>
-                <div className="flex ion-padding ion-margin">
-                  <IonInput
-                    className="ion-margin-bottom"
-                    fill="outline"
-                    type="email"
-                    placeholder="Email"
-                    onIonInput={(e: any) => setEmail(e.target.value)}
-                  ></IonInput>
-
-                  <IonInput
-                    fill="outline"
-                    type="password"
-                    placeholder="Password"
-                    onIonInput={(e: any) => setPassword(e.target.value)}
-                  ></IonInput>
-
-                  <IonInput
-                    fill="outline"
-                    type="password"
-                    placeholder="Confirm password"
-                    onIonInput={(e: any) => setConfirm(e.target.value)}
-                  ></IonInput>
-                </div>
-
-                <IonCol></IonCol>
-                <IonCol>
-                  <IonButton onClick={regUser}>Sign up</IonButton>
-                </IonCol>
-                <IonCol></IonCol>
-
-                <IonRow>
-                  <IonCol></IonCol>
-                  <IonCol>
-                    <IonTitle>Task App</IonTitle>
-                  </IonCol>
-                  <IonCol></IonCol>
-                </IonRow>
-
-                <p className="ion-padding">
-                  Already have an account? Log in{" "}
-                  <IonItem onClick={redirectToLogin}>here</IonItem>
-                </p>
-              </form>
             </IonCol>
+            <IonCol></IonCol>
           </IonRow>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonTitle>Task App</IonTitle>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+          <form>
+            <div className="flex ion-padding ion-margin">
+              <IonInput
+                className="ion-margin-bottom"
+                fill="outline"
+                type="email"
+                placeholder="Email"
+                onIonInput={(e: any) => setEmail(e.target.value)}
+              ></IonInput>
+
+              <IonInput
+                className="ion-margin-bottom"
+                fill="outline"
+                type="password"
+                placeholder="Password"
+                onIonInput={(e: any) => setPassword(e.target.value)}
+              ></IonInput>
+
+              <IonInput
+                fill="outline"
+                type="password"
+                placeholder="Confirm password"
+                onIonInput={(e: any) => setConfirm(e.target.value)}
+              ></IonInput>
+            </div>
+            <IonRow>
+              <IonCol></IonCol>
+              <IonCol>
+                <IonButton onClick={regUser}>Sign up</IonButton>
+              </IonCol>
+              <IonCol></IonCol>
+            </IonRow>
+
+            <p className="ion-padding">
+              Already have an account? Log in{" "}
+              <a onClick={redirectToLogin}>here</a>
+            </p>
+          </form>
 
           <IonToast
             isOpen={isOpen}

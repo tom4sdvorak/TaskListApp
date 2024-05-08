@@ -47,7 +47,16 @@ const Login: React.FC = () => {
             <IonCol className="ion-padding">
               <IonTitle className="ion-padding">Welcome to </IonTitle>
             </IonCol>
+            <IonCol></IonCol>
           </IonRow>
+          <IonRow>
+            <IonCol></IonCol>
+            <IonCol>
+              <IonTitle>Task App</IonTitle>
+            </IonCol>
+            <IonCol></IonCol>
+          </IonRow>
+
           <form>
             <div className="flex ion-padding ion-margin">
               <IonInput
@@ -70,13 +79,6 @@ const Login: React.FC = () => {
               <IonCol></IonCol>
               <IonCol>
                 <IonButton onClick={tryLogin}>Log in</IonButton>
-              </IonCol>
-              <IonCol></IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol></IonCol>
-              <IonCol>
-                <IonTitle>Task App</IonTitle>
               </IonCol>
               <IonCol></IonCol>
             </IonRow>

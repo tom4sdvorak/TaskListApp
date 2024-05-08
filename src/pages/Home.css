@@ -1,4 +1,10 @@
 
+ion-card {
+    --background: #18647c;
+    --color: #a7c7d1fc;
+    
+}
+
 ion-content {
     --background: #a7c7d1fc;
     --color: #18647C ;
@@ -24,3 +30,6 @@ ion-fab-button {
 ion-input {
     background-color: #f5f5f5;  
 }
+
+
+

@@ -25,6 +25,7 @@ import {
   informationOutline,
   listOutline,
   listSharp,
+  logOutOutline,
   trashOutline,
   trashSharp,
 } from "ionicons/icons";
@@ -61,10 +62,10 @@ const Menu: React.FC = () => {
   const history = useHistory();
   const [isLogged, setIsLogged] = useState(true);
 
-  async function signOut(){
+  async function signOut() {
     await signUserOut();
     setIsLogged(false);
-    history.push('/login');
+    history.push("/login");
   }
 
   return (
@@ -106,36 +107,30 @@ const Menu: React.FC = () => {
         <IonList id="labels-list">
           <IonListHeader>Other</IonListHeader>
           <IonMenuToggle key={0} autoHide={false}>
-                <IonItem
-                  className={
-                    location.pathname === "/about" ? "selected" : ""
-                  }
-                  routerLink="/about"
-                  routerDirection="none"
-                  lines="none"
-                  detail={false}
-                >
-                  <IonIcon
-                    aria-hidden="true"
-                    slot="start"
-                    ios={informationOutline}
-                    md={informationOutline}
-                  />
-                  <IonLabel>About</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-              <IonMenuToggle>
-                {isLogged &&
-                  <IonItem button onClick={signOut} lines="none">
-                    <IonIcon
-                        aria-hidden="true"
-                        slot="start"
-                        icon={informationOutline}
-                    />
-                    <IonLabel>Sign Out</IonLabel>
-                  </IonItem>
-                }
-              </IonMenuToggle>
+            <IonItem
+              className={location.pathname === "/about" ? "selected" : ""}
+              routerLink="/about"
+              routerDirection="none"
+              lines="none"
+              detail={false}
+            >
+              <IonIcon
+                aria-hidden="true"
+                slot="start"
+                ios={informationOutline}
+                md={informationOutline}
+              />
+              <IonLabel>About</IonLabel>
+            </IonItem>
+          </IonMenuToggle>
+          <IonMenuToggle>
+            {isLogged && (
+              <IonItem button onClick={signOut} lines="none">
+                <IonIcon aria-hidden="true" slot="start" icon={logOutOutline} />
+                <IonLabel>Sign Out</IonLabel>
+              </IonItem>
+            )}
+          </IonMenuToggle>
         </IonList>
       </IonContent>
     </IonMenu>

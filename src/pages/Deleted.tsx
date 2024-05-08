@@ -6,15 +6,27 @@ import {
   IonFabButton,
   IonMenuButton,
   IonPage,
-  IonTitle, useIonViewWillEnter, IonGrid, IonRow, IonCol, 
-  IonToolbar,  IonCardHeader, IonCardSubtitle, IonButton, IonRouterLink, IonCard, IonCardTitle, useIonAlert, IonIcon, 
+  IonTitle,
+  useIonViewWillEnter,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonToolbar,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonButton,
+  IonRouterLink,
+  IonCard,
+  IonCardTitle,
+  useIonAlert,
+  IonIcon,
 } from "@ionic/react";
 import { addCircle, addOutline, ellipseSharp, list } from "ionicons/icons";
-import React, { useState, useEffect } from 'react';
-import { Storage } from '@ionic/storage';
-import { trashOutline, reloadOutline } from 'ionicons/icons';
-import { format } from 'timeago.js';
-import { useStorage} from '../helpers/LocalStore';
+import React, { useState, useEffect } from "react";
+import { Storage } from "@ionic/storage";
+import { trashOutline, reloadOutline } from "ionicons/icons";
+import { format } from "timeago.js";
+import { useStorage } from "../helpers/LocalStore";
 
 const Deleted: React.FC = () => {
   const { getAllDeletedLists, changeState, deleteList } = useStorage();
@@ -32,10 +44,10 @@ const Deleted: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const resolvedData : any = await getAllDeletedLists();
+      const resolvedData: any = await getAllDeletedLists();
       setAllLists(resolvedData);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -45,7 +57,7 @@ const Deleted: React.FC = () => {
       await changeState(listID);
       fetchData();
     } catch (error) {
-      console.error('Error updating data:', error);
+      console.error("Error updating data:", error);
     }
   };
 
@@ -55,7 +67,7 @@ const Deleted: React.FC = () => {
       await deleteList(listID);
       fetchData();
     } catch (error) {
-      console.error('Error updating data:', error);
+      console.error("Error updating data:", error);
     }
   };
 
@@ -72,19 +84,41 @@ const Deleted: React.FC = () => {
       <IonContent id="deleted" className="ion-padding">
         <IonGrid>
           <IonRow>
-            {allLists.length > 0 && allLists.map((list) => (
-              <IonCol size="6" size-sm="4" size-md="3" size-xl="2" key={list.id}>
-                <IonCard key={list.id}>
-                  <IonCardHeader>
-                    <IonCardSubtitle>Deleted {format(list.edited)}</IonCardSubtitle>
-                    <IonCardTitle>{list.title}</IonCardTitle>
-                  </IonCardHeader>
-                  <IonButton fill="clear" onClick={() => removeList(list.id)}><IonIcon icon={trashOutline}></IonIcon></IonButton>
-                  <IonButton fill="clear" onClick={() => restoreList(list.id)}><IonIcon icon={reloadOutline}></IonIcon></IonButton>
-                </IonCard>
+            {allLists.length > 0 &&
+              allLists.map((list) => (
+                <IonCol
+                  size="6"
+                  size-sm="4"
+                  size-md="3"
+                  size-xl="2"
+                  key={list.id}
+                >
+                  <IonCard key={list.id}>
+                    <IonCardHeader>
+                      <IonCardSubtitle>
+                        Deleted {format(list.edited)}
+                      </IonCardSubtitle>
+                      <IonCardTitle>{list.title}</IonCardTitle>
+                    </IonCardHeader>
+                    <IonButton fill="clear" onClick={() => removeList(list.id)}>
+                      <IonIcon icon={trashOutline}></IonIcon>
+                    </IonButton>
+                    <IonButton
+                      fill="clear"
+                      onClick={() => restoreList(list.id)}
+                    >
+                      <IonIcon icon={reloadOutline}></IonIcon>
+                    </IonButton>
+                  </IonCard>
+                </IonCol>
+              ))}
+            {allLists.length < 1 && (
+              <IonCol size="12">
+                <h1 className="ion-text-center">
+                  You have no deleted task lists.
+                </h1>
               </IonCol>
-            ))}
-            {allLists.length < 1 && <IonCol size="12"><h1 className="ion-text-center">You have no deleted task lists.</h1></IonCol>}
+            )}
           </IonRow>
         </IonGrid>
       </IonContent>
