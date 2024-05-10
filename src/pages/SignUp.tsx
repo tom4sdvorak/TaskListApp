@@ -72,12 +72,10 @@ const SignUp: React.FC = () => {
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
-          <IonRow>
-            <IonCol></IonCol>
+          <IonRow className="ion-text-center">
             <IonCol>
-              <IonTitle>Task App</IonTitle>
+              <h1>Task App</h1>
             </IonCol>
-            <IonCol></IonCol>
           </IonRow>
           <form>
             <div className="flex ion-padding ion-margin">
@@ -107,7 +105,9 @@ const SignUp: React.FC = () => {
             <IonRow>
               <IonCol></IonCol>
               <IonCol>
-                <IonButton onClick={regUser}>Sign up</IonButton>
+                <IonButton id="signup-button" onClick={regUser}>
+                  Sign up
+                </IonButton>
               </IonCol>
               <IonCol></IonCol>
             </IonRow>

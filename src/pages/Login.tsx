@@ -49,12 +49,10 @@ const Login: React.FC = () => {
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
-          <IonRow>
-            <IonCol></IonCol>
+          <IonRow className="ion-text-center">
             <IonCol>
-              <IonTitle>Task App</IonTitle>
+              <h1>Task App</h1>
             </IonCol>
-            <IonCol></IonCol>
           </IonRow>
 
           <form>
@@ -78,7 +76,9 @@ const Login: React.FC = () => {
             <IonRow>
               <IonCol></IonCol>
               <IonCol>
-                <IonButton onClick={tryLogin}>Log in</IonButton>
+                <IonButton id="login-button" onClick={tryLogin}>
+                  Log in
+                </IonButton>
               </IonCol>
               <IonCol></IonCol>
             </IonRow>
