@@ -94,7 +94,6 @@ const Home: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent id="home" className="ion-padding">
-        Click plus button to add a list
         <IonGrid>
           <IonRow>
             {allLists.length > 0 &&
