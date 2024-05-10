@@ -8,15 +8,25 @@ import {
   IonMenuButton,
   IonPage,
   IonTitle,
-  useIonViewWillEnter, IonGrid, IonRow, IonCol, 
-  IonToolbar, IonCardHeader, IonCardSubtitle, IonButton, IonRouterLink, IonCard, IonCardTitle, useIonAlert, 
+  useIonViewWillEnter,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonToolbar,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonButton,
+  IonRouterLink,
+  IonCard,
+  IonCardTitle,
+  useIonAlert,
 } from "@ionic/react";
 import { addCircle, addOutline, ellipseSharp, list } from "ionicons/icons";
-import React, { useState, useEffect } from 'react';
-import { Storage } from '@ionic/storage';
-import { trashOutline, add } from 'ionicons/icons';
-import { format } from 'timeago.js';
-import { useStorage, List} from '../helpers/LocalStore';
+import React, { useState, useEffect } from "react";
+import { Storage } from "@ionic/storage";
+import { trashOutline, add } from "ionicons/icons";
+import { format } from "timeago.js";
+import { useStorage, List } from "../helpers/LocalStore";
 import "./Home.css";
 
 const Home: React.FC = () => {
@@ -31,38 +41,37 @@ const Home: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const resolvedData : any = await getAllLists();
+      const resolvedData: any = await getAllLists();
       setAllLists(resolvedData);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
   const addTaskList = async (listName: string) => {
     // Don't add anything if name is empty
-    if (listName.length < 1){
+    if (listName.length < 1) {
       return false;
-    }
-    else{
+    } else {
       try {
         console.log("Adding list " + listName);
         const created = Date.now();
         const uniqID = created - 1714827780379;
         const newList: List = {
-        title: listName,
-        edited: created,
-        deleted: false, 
-        tasks: []
-        }
+          title: listName,
+          edited: created,
+          deleted: false,
+          tasks: [],
+        };
         await saveList(uniqID.toString(), newList);
         await fetchData();
         return true;
       } catch (error) {
-        console.error('Error updating data:', error);
+        console.error("Error updating data:", error);
         return false;
       }
     }
-  }
+  };
 
   const deleteList = async (listID: string) => {
     try {
@@ -70,7 +79,7 @@ const Home: React.FC = () => {
       await changeState(listID);
       fetchData();
     } catch (error) {
-      console.error('Error updating data:', error);
+      console.error("Error updating data:", error);
     }
   };
 
@@ -88,35 +97,68 @@ const Home: React.FC = () => {
         Click plus button to add a list
         <IonGrid>
           <IonRow>
-            {allLists.length > 0 && allLists.map((list) => (
-              <IonCol size="6" size-sm="4" size-md="3" size-xl="2" key={list.id}>
-                <IonCard>
-                  <IonCardHeader>
-                    <IonCardSubtitle>Edited {format(list.edited)}</IonCardSubtitle>
-                    <IonCardTitle><IonRouterLink routerLink={"/tasks/" + list.id} routerDirection="forward">{list.title}</IonRouterLink></IonCardTitle>
-                  </IonCardHeader>
-                  <IonButton fill="clear" onClick={() => deleteList(list.id)}><IonIcon icon={trashOutline}></IonIcon></IonButton>
-                </IonCard>
+            {allLists.length > 0 &&
+              allLists.map((list) => (
+                <IonCol
+                  size="6"
+                  size-sm="4"
+                  size-md="3"
+                  size-xl="2"
+                  key={list.id}
+                >
+                  <IonCard>
+                    <IonCardHeader>
+                      <IonCardSubtitle>
+                        Edited {format(list.edited)}
+                      </IonCardSubtitle>
+                      <IonCardTitle>
+                        <IonRouterLink
+                          routerLink={"/tasks/" + list.id}
+                          routerDirection="forward"
+                        >
+                          {list.title}
+                        </IonRouterLink>
+                      </IonCardTitle>
+                    </IonCardHeader>
+                    <IonButton fill="clear" onClick={() => deleteList(list.id)}>
+                      <IonIcon icon={trashOutline}></IonIcon>
+                    </IonButton>
+                  </IonCard>
+                </IonCol>
+              ))}
+            {allLists.length < 1 && (
+              <IonCol size="12">
+                <h1 className="ion-text-center">You have no task lists.</h1>
               </IonCol>
-            ))}
-            {allLists.length < 1 && <IonCol size="12"><h1 className="ion-text-center">You have no task lists.</h1></IonCol>}   
+            )}
           </IonRow>
         </IonGrid>
-        <IonFab id="add-list" slot="fixed" vertical="bottom" horizontal="end" onClick={() =>
-        presentAlert({
-          header: 'CREATE NEW TASK LIST',
-          buttons: ['Cancel', {
-            text: 'Add',
-            handler: (data) => {
-              return addTaskList(data.taskInput);
-            }
-          }],
-          inputs: [{
-            name: 'taskInput',
-            placeholder: 'Name',
-          }]
-        })
-        }>
+        <IonFab
+          id="add-list"
+          slot="fixed"
+          vertical="bottom"
+          horizontal="end"
+          onClick={() =>
+            presentAlert({
+              header: "CREATE NEW TASK LIST",
+              buttons: [
+                "Cancel",
+                {
+                  text: "Add",
+                  handler: (data) => {
+                    return addTaskList(data.taskInput);
+                  },
+                },
+              ],
+              inputs: [
+                {
+                  name: "taskInput",
+                  placeholder: "Name",
+                },
+              ],
+            })
+          }
+        >
           <IonFabButton>
             <IonIcon icon={add}></IonIcon>
           </IonFabButton>

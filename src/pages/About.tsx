@@ -42,8 +42,8 @@ const About: React.FC = () => {
         <IonCard>
           <IonCardTitle className="ion-padding">Contact us</IonCardTitle>
           <IonCardContent>
-            <IonItem>Website: www.taskapp.fi</IonItem>
-            <IonItem>Email:contact@taskapp.fi</IonItem>
+            <p>Website: www.taskapp.fi</p>
+            <a>Email:contact@taskapp.fi</a>
           </IonCardContent>
         </IonCard>
       </IonContent>
