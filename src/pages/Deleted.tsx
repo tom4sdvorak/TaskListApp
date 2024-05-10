@@ -72,9 +72,9 @@ const Deleted: React.FC = () => {
   };
 
   return (
-    <IonPage>
+    <IonPage id="deleted">
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar id="deleted-toolbar">
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
@@ -93,17 +93,22 @@ const Deleted: React.FC = () => {
                   size-xl="2"
                   key={list.id}
                 >
-                  <IonCard key={list.id}>
+                  <IonCard id="deleted-card" key={list.id}>
                     <IonCardHeader>
                       <IonCardSubtitle>
                         Deleted {format(list.edited)}
                       </IonCardSubtitle>
                       <IonCardTitle>{list.title}</IonCardTitle>
                     </IonCardHeader>
-                    <IonButton fill="clear" onClick={() => removeList(list.id)}>
+                    <IonButton
+                      id="deleted-home-button"
+                      fill="clear"
+                      onClick={() => removeList(list.id)}
+                    >
                       <IonIcon icon={trashOutline}></IonIcon>
                     </IonButton>
                     <IonButton
+                      id="deleted-home-button"
                       fill="clear"
                       onClick={() => restoreList(list.id)}
                     >

@@ -120,7 +120,11 @@ const Home: React.FC = () => {
                         </IonRouterLink>
                       </IonCardTitle>
                     </IonCardHeader>
-                    <IonButton fill="clear" onClick={() => deleteList(list.id)}>
+                    <IonButton
+                      id="home-button"
+                      fill="clear"
+                      onClick={() => deleteList(list.id)}
+                    >
                       <IonIcon icon={trashOutline}></IonIcon>
                     </IonButton>
                   </IonCard>
