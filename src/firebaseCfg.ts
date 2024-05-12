@@ -21,22 +21,21 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-
+// Try to log in user and return message about success or error
 export async function loginUser(email: string, password: string){
     try {
         const res = await signInWithEmailAndPassword(auth, email, password);
-        console.log(res);
-        return true;
+        return {answer: true, message: "Login successful"};
     } catch(error) {
-        console.log(error);
-        return false;
+        console.log("Problem", error);
+        return {answer: false, message: error.code};
     }
 }
 
+// Try to register user and return success/failure boolean
 export async function registerUser(email: string, password: string){
     try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(res);
         return true;
     } catch(error) {
         console.log(error);

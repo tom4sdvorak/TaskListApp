@@ -37,7 +37,6 @@ import "@ionic/react/css/palettes/dark.system.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import Tasks from "./pages/Tasks";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -53,13 +52,12 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [userLogged, setLogged] = useState(false);
+
   useEffect(() => {
     getCurrentUser().then((user) => {
       if (user) {
-        console.log("User logged");
         setLogged(true);
       } else {
-        console.log("User not logged");
         setLogged(false);
       }
     });
@@ -69,7 +67,7 @@ const App: React.FC = () => {
     <IonApp>
       <IonReactRouter>
         <IonSplitPane contentId="main">
-          <Menu />
+          <Menu userLogged={userLogged} setLogged={setLogged}/>
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/login" />
@@ -78,25 +76,29 @@ const App: React.FC = () => {
               path="/home"
               exact={true}
               render={(props) => {
-                return userLogged ? <Home /> : <Login />;
+                return userLogged ? <Home /> : <Login setLogged={setLogged}/>;
               }}
             />
             <Route
               path="/tasks/:id"
               render={(props) => {
-                return userLogged ? <TaskList {...props} /> : <Login />;
+                return userLogged ? <TaskList {...props} /> : <Login setLogged={setLogged}/>;
               }}
             />
             <Route
               path="/deleted"
               exact={true}
               render={(props) => {
-                return userLogged ? <Deleted /> : <Login />;
+                return userLogged ? <Deleted /> : <Login setLogged={setLogged}/>;
               }}
             />
-            <Route path="/about" exact={true}>
-              <About />
-            </Route>
+            <Route
+              path="/about"
+              exact={true}
+              render={(props) => {
+                return userLogged ? <About /> : <Login setLogged={setLogged}/>;
+              }}
+            />
 
             <Route path="/signup" exact={true}>
               <SignUp />
@@ -105,7 +107,7 @@ const App: React.FC = () => {
               path="/login"
               exact={true}
               render={(props) => {
-                return userLogged ? <Home /> : <Login />;
+                return userLogged ? <Home /> : <Login setLogged={setLogged}/>;
               }}
             />
           </IonRouterOutlet>

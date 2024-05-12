@@ -5,28 +5,51 @@ import {
   IonGrid,
   IonHeader,
   IonInput,
-  IonItem,
   IonPage,
   IonRow,
+  IonSpinner,
   IonTitle,
+  IonToast,
   IonToolbar,
 } from "@ionic/react";
 import React, { useState } from "react";
 import { loginUser } from "../firebaseCfg";
-
 import { useHistory } from "react-router";
 import "../theme/variables.css";
 
-const Login: React.FC = () => {
+// Interface that holds imported state function from App.tsx
+interface LoginProps {
+  setLogged: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login: React.FC<LoginProps> = ({ setLogged }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
+  const [spinner, setSpinner] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [toastMessage, setToast] = useState("Passwords do not match!");
 
   async function tryLogin() {
-    console.log("Loggin with: " + email + password);
+    setSpinner(true);
     const res = await loginUser(email, password);
-    if (res) {
-      redirectToHome();
+    
+    if (res.answer) {
+      setSpinner(false);
+      setToast(res.message);
+      setIsOpen(true);
+      setLogged(true);
+      setTimeout(redirectToHome, 5000);
+    }
+    else if (res.message == "auth/invalid-email"){
+      setSpinner(false);
+      setToast("Invalid email or password");
+      setIsOpen(true);
+    }
+    else {
+      setSpinner(false);
+      setToast("Something went wrong, please try again");
+      setIsOpen(true);
     }
   }
 
@@ -81,7 +104,7 @@ const Login: React.FC = () => {
                   Log in
                 </IonButton>
               </IonCol>
-              <IonCol></IonCol>
+              <IonCol>{spinner && (<IonSpinner></IonSpinner>)}</IonCol>
             </IonRow>
             <IonRow>
               <IonCol className="ion-text-center">
@@ -92,6 +115,12 @@ const Login: React.FC = () => {
             </IonRow>
           </form>
         </IonGrid>
+        <IonToast
+            isOpen={isOpen}
+            message={toastMessage}
+            onDidDismiss={() => setIsOpen(false)}
+            duration={5000}
+          ></IonToast>
       </IonContent>
     </IonPage>
   );

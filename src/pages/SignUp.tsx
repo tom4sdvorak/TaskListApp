@@ -5,7 +5,6 @@ import {
   IonGrid,
   IonHeader,
   IonInput,
-  IonItem,
   IonPage,
   IonRow,
   IonTitle,
@@ -29,6 +28,7 @@ const SignUp: React.FC = () => {
     history.push("/login");
   };
 
+  // Attempt to register user and get confirmation from firebase
   async function regUser() {
     if (password !== confirm) {
       setToast("Passwords do not match!");
@@ -114,8 +114,7 @@ const SignUp: React.FC = () => {
             <IonRow>
               <IonCol className="ion-text-center">
                 <p>
-                  Already have an account? Log in{" "}
-                  <a onClick={redirectToLogin}>here</a>
+                  Already have an account? Log in <a href="/login">here</a>
                 </p>
               </IonCol>
             </IonRow>

@@ -21,9 +21,7 @@ import {
   IonCardTitle,
   useIonAlert,
 } from "@ionic/react";
-import { addCircle, addOutline, ellipseSharp, list } from "ionicons/icons";
-import React, { useState, useEffect } from "react";
-import { Storage } from "@ionic/storage";
+import React, { useState } from "react";
 import { trashOutline, add } from "ionicons/icons";
 import { format } from "timeago.js";
 import { useStorage, List } from "../helpers/LocalStore";
@@ -48,13 +46,13 @@ const Home: React.FC = () => {
     }
   };
 
+  //Adds a new task list with a name chosen by user
   const addTaskList = async (listName: string) => {
     // Don't add anything if name is empty
     if (listName.length < 1) {
       return false;
     } else {
       try {
-        console.log("Adding list " + listName);
         const created = Date.now();
         const uniqID = created - 1714827780379;
         const newList: List = {
@@ -73,9 +71,9 @@ const Home: React.FC = () => {
     }
   };
 
+  // Marks list for deletion
   const deleteList = async (listID: string) => {
     try {
-      console.log("Trying to mark list deleted " + listID);
       await changeState(listID);
       fetchData();
     } catch (error) {

@@ -2,8 +2,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonFab,
-  IonFabButton,
   IonMenuButton,
   IonPage,
   IonTitle,
@@ -15,15 +13,12 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonButton,
-  IonRouterLink,
   IonCard,
   IonCardTitle,
-  useIonAlert,
   IonIcon,
 } from "@ionic/react";
 
-import React, { useState, useEffect } from "react";
-import { Storage } from "@ionic/storage";
+import React, { useState } from "react";
 import { trashOutline, reloadOutline } from "ionicons/icons";
 import { format } from "timeago.js";
 import { useStorage } from "../helpers/LocalStore";
@@ -34,9 +29,6 @@ const Deleted: React.FC = () => {
 
   // Initialize array of task lists
   const [allLists, setAllLists] = useState([]);
-  /*useEffect(() => {
-    fetchData();
-  }, []);*/
 
   // Update view of tasks when entering the page
   useIonViewWillEnter(() => {
@@ -52,6 +44,7 @@ const Deleted: React.FC = () => {
     }
   };
 
+  // Sets delete status of a list to false making it move from deleted page to Home
   const restoreList = async (listID: string) => {
     try {
       console.log("Trying to mark list undeleted " + listID);
@@ -62,6 +55,7 @@ const Deleted: React.FC = () => {
     }
   };
 
+  // Permamently removes list from the app and storage
   const removeList = async (listID: string) => {
     try {
       console.log("Trying to permamently delete list " + listID);

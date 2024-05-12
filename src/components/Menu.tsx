@@ -1,5 +1,4 @@
 import {
-  IonButton,
   IonButtons,
   IonContent,
   IonIcon,
@@ -11,27 +10,19 @@ import {
   IonMenuButton,
   IonMenuToggle,
   IonNote,
-  useIonViewDidEnter,
-  useIonViewDidLeave,
-  useIonViewWillEnter,
-  useIonViewWillLeave,
 } from "@ionic/react";
 
 import { useHistory, useLocation } from "react-router-dom";
 import {
-  bookmarkOutline,
   homeOutline,
   homeSharp,
   informationOutline,
-  listOutline,
-  listSharp,
   logOutOutline,
   trashOutline,
   trashSharp,
 } from "ionicons/icons";
 import "./Menu.css";
 import { signUserOut } from "../firebaseCfg";
-import { useState } from "react";
 
 interface AppPage {
   url: string;
@@ -57,15 +48,19 @@ const appPages: AppPage[] = [
 
 const labels = ["About"];
 
-const Menu: React.FC = () => {
+// Interface of imports from App.tsx
+interface MenuProps {
+  userLogged: boolean;
+  setLogged: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Menu: React.FC<MenuProps> = ({ userLogged, setLogged }) => {
   const location = useLocation();
   const history = useHistory();
-  const [isLogged, setIsLogged] = useState(true);
 
   async function signOut() {
     await signUserOut();
-    setIsLogged(false);
-    history.push("/login");
+    setLogged(false);
   }
 
   return (
@@ -124,7 +119,7 @@ const Menu: React.FC = () => {
             </IonItem>
           </IonMenuToggle>
           <IonMenuToggle>
-            {isLogged && (
+            {userLogged && (
               <IonItem button onClick={signOut} lines="none">
                 <IonIcon aria-hidden="true" slot="start" icon={logOutOutline} />
                 <IonLabel>Sign Out</IonLabel>

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Storage } from "@ionic/storage";
 
 export interface Task {
@@ -15,14 +14,11 @@ export interface List {
 
 export function useStorage() {
   const store = new Storage();
-  const [workList, setList] = useState();
   store.create();
 
   const getList = async (id: string) => {
     try {
       const value = await store.get(id);
-      console.log("Data from local storage: ", value);
-      //setList(value);
       return value;
     } catch (error) {
       console.error("Error reading data from local storage:", error);
@@ -30,10 +26,10 @@ export function useStorage() {
     }
   };
 
+  // Function to save list to local storage
   const saveList = async (id: string, newList: List) => {
     try {
       await store.set(id, newList);
-      console.log("Data saved to local storage " + newList.title);
       return true;
     } catch (error) {
       console.error("Error saving data to local storage:", error);

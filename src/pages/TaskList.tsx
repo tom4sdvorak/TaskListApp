@@ -1,7 +1,5 @@
 import {
   IonButtons,
-  IonCard,
-  IonCardContent,
   IonContent,
   IonHeader,
   IonMenuButton,
@@ -14,7 +12,6 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
-  IonAlert,
   useIonAlert,
   IonListHeader,
   IonLabel,
