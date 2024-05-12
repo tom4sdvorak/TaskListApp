@@ -12,6 +12,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React from "react";
+import "../theme/variables.css";
 
 const About: React.FC = () => {
   return (

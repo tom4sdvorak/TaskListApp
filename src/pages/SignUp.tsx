@@ -13,9 +13,9 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import React, { useState } from "react";
-import "./Home.css";
 import { registerUser } from "../firebaseCfg";
 import { useHistory } from "react-router";
+import "../theme/variables.css";
 
 const SignUp: React.FC = () => {
   const [email, setEmail] = useState("");

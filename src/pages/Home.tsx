@@ -27,7 +27,7 @@ import { Storage } from "@ionic/storage";
 import { trashOutline, add } from "ionicons/icons";
 import { format } from "timeago.js";
 import { useStorage, List } from "../helpers/LocalStore";
-import "./Home.css";
+import "../theme/variables.css";
 
 const Home: React.FC = () => {
   const { getAllLists, saveList, changeState } = useStorage();

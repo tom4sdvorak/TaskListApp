@@ -23,8 +23,7 @@ import React, { useState, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { add } from "ionicons/icons";
 import { useStorage, List, Task } from "../helpers/LocalStore";
-import "./TaskList.css";
-import "./Home.css";
+import "../theme/variables.css";
 
 //Create interface for URL parameter
 interface RouteParams {

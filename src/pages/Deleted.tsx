@@ -21,12 +21,13 @@ import {
   useIonAlert,
   IonIcon,
 } from "@ionic/react";
-import { addCircle, addOutline, ellipseSharp, list } from "ionicons/icons";
+
 import React, { useState, useEffect } from "react";
 import { Storage } from "@ionic/storage";
 import { trashOutline, reloadOutline } from "ionicons/icons";
 import { format } from "timeago.js";
 import { useStorage } from "../helpers/LocalStore";
+import "../theme/variables.css";
 
 const Deleted: React.FC = () => {
   const { getAllDeletedLists, changeState, deleteList } = useStorage();

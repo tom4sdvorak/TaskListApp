@@ -13,8 +13,9 @@ import {
 } from "@ionic/react";
 import React, { useState } from "react";
 import { loginUser } from "../firebaseCfg";
-import "./Home.css";
+
 import { useHistory } from "react-router";
+import "../theme/variables.css";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
