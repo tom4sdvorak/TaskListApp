@@ -43,10 +43,10 @@ const Login: React.FC = () => {
       </IonHeader>
       <IonContent className="ion-padding">
         <IonGrid>
-          <IonRow>
+          <IonRow className="ion-text-center">
             <IonCol></IonCol>
-            <IonCol className="ion-padding">
-              <IonTitle className="ion-padding">Welcome to </IonTitle>
+            <IonCol>
+              <IonTitle>Welcome to </IonTitle>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
@@ -76,17 +76,20 @@ const Login: React.FC = () => {
 
             <IonRow>
               <IonCol></IonCol>
-              <IonCol>
+              <IonCol className="ion-text-center">
                 <IonButton id="login-button" onClick={tryLogin}>
                   Log in
                 </IonButton>
               </IonCol>
               <IonCol></IonCol>
             </IonRow>
-
-            <p>
-              Don't have an account yet? Sign up <a href="/signup">here</a>
-            </p>
+            <IonRow>
+              <IonCol className="ion-text-center">
+                <p>
+                  Don't have an account yet? Sign up <a href="/signup">here</a>
+                </p>
+              </IonCol>
+            </IonRow>
           </form>
         </IonGrid>
       </IonContent>

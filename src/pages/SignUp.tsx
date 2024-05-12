@@ -67,8 +67,8 @@ const SignUp: React.FC = () => {
         <IonGrid>
           <IonRow>
             <IonCol></IonCol>
-            <IonCol className="ion-padding">
-              <IonTitle className="ion-padding">Welcome to </IonTitle>
+            <IonCol className="ion-text-center">
+              <IonTitle>Welcome to </IonTitle>
             </IonCol>
             <IonCol></IonCol>
           </IonRow>
@@ -104,18 +104,21 @@ const SignUp: React.FC = () => {
             </div>
             <IonRow>
               <IonCol></IonCol>
-              <IonCol>
+              <IonCol className="ion-text-center">
                 <IonButton id="signup-button" onClick={regUser}>
                   Sign up
                 </IonButton>
               </IonCol>
               <IonCol></IonCol>
             </IonRow>
-
-            <p className="ion-padding">
-              Already have an account? Log in{" "}
-              <a onClick={redirectToLogin}>here</a>
-            </p>
+            <IonRow>
+              <IonCol className="ion-text-center">
+                <p>
+                  Already have an account? Log in{" "}
+                  <a onClick={redirectToLogin}>here</a>
+                </p>
+              </IonCol>
+            </IonRow>
           </form>
 
           <IonToast
